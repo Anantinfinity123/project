@@ -1,0 +1,115 @@
+<% layout('/layout/boilerplate') -%>
+
+    <body>
+        <div class="row mt-3">
+            <div class="col-8 offset-3">
+                <!-- <h2>Your content is here...</h2> -->
+                <h3>
+                    <%= item.title %>
+                </h3>
+                <!-- <h4 class="content_id">With id : <%= item._id %> -->
+                </h4>
+            </div>
+            <div class="card col-5 offset-3 show-card listing-card">
+                <img src="<%= item.image.url %>" class="card-img-top show-img" alt="listing_image">
+                <div class="card-body">
+                    <p class="card-text">
+                    <ul>
+                        <li><b>Owned by : </b>
+                            <%= item.owner.username %>
+                        </li>
+                        <li><b>Info : </b>
+                            <%= item.description%>
+                        </li>
+                        <li><b>Price : </b>&#8377;<%= item.price.toLocaleString("en-IN")%> / night
+                        </li>
+                        <li><b>Location : </b>
+                            <%= item.location%>
+                        </li>
+                        <li><b>Country : </b>
+                            <%= item.country%>
+                        </li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+            <br>
+
+            <% if(currUser && item.owner._id.equals(currUser._id)) { %>
+                <div class="btns">
+                    <a href="/listings/<%= item._id %>/edit"
+                        class="btn btn-dark btn-edit offset-3 edit-btn">Edit</a><br>
+                    <form action="/listings/<%= item._id %>?_method=DELETE" method="POST">
+                        <button class="delete btn btn-dark delete-btn">Delete</button>
+                    </form>
+                </div>
+            <% } %>
+
+            <div class="col-8 offset-3 mb-3">
+                <hr>
+                <% if(currUser) { %>
+                    <h4>Leave a Review</h4>
+                    <form action="/listings/<%= item._id %>/reviews" method="POST" novalidate
+                        class="needs-validation">
+                        <div class="mb-3 mt-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="review[username]">
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <label for="rating" class="form-label">Rating:</label>
+                            <fieldset class="starability-slot">
+                                <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." >
+                                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                                <label for="first-rate1" title="Terrible">1 star</label>
+                                <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                                <label for="first-rate2" title="Not good">2 stars</label>
+                                <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                                <label for="first-rate3" title="Average">3 stars</label>
+                                <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                                <label for="first-rate4" title="Very good">4 stars</label>
+                                <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                                <label for="first-rate5" title="Amazing">5 stars</label>
+                            </fieldset>
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <label for="comment" class="form-label">Comments:</label>
+                            <textarea name="review[comment]" id="comment" cols="30" rows="5"
+                                class="form-control" required></textarea>
+                            <div class="invalid-feedback">Please add some comments for review</div>
+                        </div><br>
+                        <button class="btn btn-outline-dark">Submit</button>
+                    </form>
+                    <hr>
+                <% } %>
+                <% if(item.reviews.length > 0) { %>
+                    <div class="row">
+                            <p><b>All Reviews</b></p>
+                            <% for(review of item.reviews) { %>
+                                <div class="card col-5 ms-3 mb-3">
+                                    <div class="card-body">
+                                        <div class="card-title review-username"><b>@<%= review.author.username
+                                                    %></b></div>
+                                        <p class="starability-result card-text"
+                                            data-rating="<%= review.rating %>"></p>
+                                        <p class="card-text">
+                                            <%= review.comment %>
+                                        </p>
+                                        <form
+                                            action="/listings/<%= item._id %>/reviews/<%= review._id%>?_method=DELETE"
+                                            class="mb-2" method="POST">
+                                            <button class="btn btn-dark btn-sm">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            <% } %>
+                    </div>
+                <% } %>
+            </div>
+            <div class="col-8 offset-3 mb-3">
+                <h3>Where you'll be</h3>
+                <a href="/listings/<%= item._id %>/map"
+                    class="btn btn-dark btn-edit offset-3 edit-btn">Find location</a><br>
+                <div class="map"></div>
+            </div>
+        </div>
+    </body>

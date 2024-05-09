@@ -1,0 +1,98 @@
+<% layout('/layout/boilerplate') -%>
+
+<body>
+    <div class="row mt-3">
+        <div class="col-8 offset-2">
+            <h3>Kindly fill the form for a new wanderlust...</h3><br>
+            <form action="/listings" method="POST"class="needs-validation" novalidate enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="title" class="form-label identity-n">Title:</label>
+                    <input 
+                        type="text" 
+                        placeholder="enter title" 
+                        name="listing[title]" 
+                        class="form-control" 
+                        required
+                    >
+                    <div class="valid-feedback">Title looks good!</div>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label identity-n">Description:</label>
+                    <textarea placeholder="enter description" name="listing[description]" cols="30" rows="10" class="form-control" required></textarea>
+                    <div class="invalid-feedback">Please enter valid description</div>
+                </div>
+                <!-- <div class="mb-3">
+                    <label for="image" class="form-label identity-n">Image Link:</label> -->
+                    <!-- <input type="url" placeholder="enter image URL/Link" name="listing[image]"> -->
+                    <!-- <input type="text" placeholder="enter image URL/Link" name="listing[image]"
+                    class="form-control"> -->
+                <!-- </div> -->
+                <div class="row">
+                    <div class="mb-3 col-md-9">
+                        <label for="image" class="form-label identity-n">Upload listing image file:</label>
+                        <!-- <input type="url" placeholder="enter image URL/Link" name="listing[image]"> -->
+                        <input type="file" name="listing[image]"
+                            class="form-control" required>
+                    </div>
+                    <div class="mb-3 col-md-3">
+                        <label for="price" class="form-label identity-n">Price:</label>
+                        <input  
+                            placeholder="enter price" 
+                            name="listing[price]" 
+                            class="form-control"
+                            required
+                        >
+                        <div class="invalid-feedback">Please enter valid price</div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <label for="location" class="form-label identity-n">Location:</label>
+                        <input 
+                            type="text" 
+                            placeholder="enter location" 
+                            name="listing[location]" 
+                            class="form-control"
+                            required
+                        >
+                        <div class="invalid-feedback">Location must be correct</div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label for="country" class="form-label identity-n">Country:</label>
+                        <input 
+                            type="text" 
+                            placeholder="enter country" 
+                            name="listing[country]" 
+                            class="form-control"
+                            required
+                        >
+                        <div class="invalid-feedback">Country name must be correct</div>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <label for="category" class="form-label identity-n">Category:</label>
+                        <select class="form-select" aria-label="Default select example" name="category">
+                            <option selected>Category...</option>
+                            <option value="1">Trending</option>
+                            <option value="2">Rooms</option>
+                            <option value="3">Iconic cities</option> -->
+                            <!-- <option value="4">Mountain</option>
+                            <option value="5">Beach</option>
+                            <option value="6">Amazing pools</option>
+                            <option value="7">Camping</option>
+                            <option value="8">Farms</option>
+                            <option value="9">Arctic</option>
+                            <option value="10">Temple</option>
+                            <option value="11">Theme park</option>
+
+                          </select>
+                    </div>
+                </div> -->
+                
+                <button class="btn btn-dark add-btn mt-3">Submit</button><br>
+            </form>
+        </div>
+    </div>
+</body>

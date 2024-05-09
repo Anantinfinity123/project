@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premap info's</title>
+    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        html,
+        body {
+            border: 2px solid black;
+            margin: auto;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="premap">
+        <h3 class="wl">Your Wanderlust location must be there after some time...</h3>
+    </div>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+
+    <script>
+        const mapToken = "<%= process.env.MAPAPIKEY %>";
+        const platform = new H.service.Platform({ apikey: mapToken });
+
+        const searchText = "<%= item1.location %>";
+        console.log(searchText);
+        const geocoder = platform.getGeocodingService();
+        geocoder.geocode({ searchText }, (result) => {
+            const location =
+                result.Response.View[0].Result[0].Location.DisplayPosition;
+            console.log(location);
+            const { Latitude: lat, Longitude: lng } = location;
+            console.log(lat, lng);
+            // const marker = new H.map.Marker({ lat, lng });
+            // map.addObject(marker);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Geocoding of Wanderlust listing</title>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div id="map">
+      <h3 class="wl">Your wanderlust location...</h3>
+    </div>
+
+    <script>
+        const mapToken = "<%= process.env.MAPAPIKEY %>";
+        const platform = new H.service.Platform({ apikey: mapToken });
+
+        
+
+        // Create a service object to perform operations like geocoding
+        var service = platform.getSearchService();
+
+        // Geocode an address
+        var geocodingParams = {
+            q: '<%= item1.location %>'   // Address to be geocoded
+        };
+
+        let coordinates = service.geocode(
+            geocodingParams,
+            onSuccess,
+            onError
+        );
+
+        // console.log(coordinates);
+
+        function onSuccess(result) {
+            var coordinates = result.items[0].position;
+            console.log(coordinates);
+            console.log('Latitude:', coordinates.lat);
+            console.log('Longitude:', coordinates.lng);
+            // const lat = location.lat;
+            // const lng = location.lng;
+            // console.log(lat);
+            // console.log(lng);
+            // const marker = new H.map.Marker(location);
+            // map.addObject(marker);
+            
+
+            var defaultLayers = platform.createDefaultLayers();
+
+            // Instantiate (and display) a map object:
+            var map = new H.Map(
+                document.getElementById('map'),
+                defaultLayers.vector.normal.map,
+                {
+                    zoom: 8,
+                    center: { lat: coordinates.lat, lng: coordinates.lng }, // Default center coordinates (Berlin, Germany)
+                    pixelRatio: window.devicePixelRatio || 1,
+                }
+            );
+            window.addEventListener("resize", () => map.getViewPort().resize());
+            const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+            const ui = H.ui.UI.createDefault(map, defaultLayers);
+            var marker = new H.map.Marker(coordinates);
+            // ui.addBubble(new H.ui.InfoBubble(coordinates, {
+                //     content: ''
+                
+                // }));
+            // var bubble = new H.ui.InfoBubble(coordinates, {
+            //     content: 'Brandenburg Gate<br>Berlin, Germany'
+            // });
+            
+            // ui.addBubble(bubble);
+            map.addObject(marker);
+        };
+
+
+        function onError(error) {
+            console.error('Error:', error);
+        };
+
+        
+    </script>
+</body>
+
+</html>

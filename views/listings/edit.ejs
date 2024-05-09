@@ -1,0 +1,56 @@
+<% layout('/layout/boilerplate') -%>
+
+    <body>
+        <div class="row mt-3">
+            <div class="col-8 offset-2"><br>
+                <h3>For edit the listing fill up the form...</h3><br>
+                <form action="/listings/<%= item._id %>?_method=PUT" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="title" class="form-label identity-e">Title:</label>
+                        <input type="text" value="<%= item.title %>" name="listing[title]" class="form-control" required>
+                        <div class="invalid-feedback">Title looks like energetic</div>
+                    </div>
+                    <br>
+                    <div class="mb-3">
+                        <label for="description" class="form-label identity-e">Description:</label>
+                        <textarea name="listing[description]" cols="30" rows="5"
+                            class="form-control" required><%= item.description %></textarea>
+                            <div class="invalid-feedback">Please enter some info:</div>
+                    </div>
+                    <br>
+                    <div class="mb-3">
+                        <h3>Original Image</h3>
+                        <img src="<%= originalImageUrl %>" alt="listingImage">
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-md-8">
+                            <label for="image" class="form-label identity-e">Upload Image link:</label>
+                            <input type="file" name="listing[image]" class="form-control">
+                            <div class="invalid-feedback">Please provide a image link for clear visualisation:</div>
+                        </div>
+                        <div class="mb-3 col-md-4">
+                            <label for="price" class="form-label identity-e">Price:</label>
+                            <input type="number" value="<%= item.price %>" name="listing[price]" class="form-control" required>
+                            <div class="invalid-feedback">Please provide some rent value:</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                            <label for="location" class="form-label identity-e">Location:</label>
+                            <input type="text" value=" <%= item.location %>" name="listing[location]"
+                                class="form-control" required>
+                                <div class="invalid-feedback">Enter valid location</div>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="country" class="form-label identity-e">Country:</label>
+                            <input type="text" value="<%= item.country %>" name="listing[country]" class="form-control" required>
+                            <div class="invalid-feedback">Please enter correct country name:</div>
+                        </div>
+                    </div>
+                    <br>
+                    <button class="btn btn-dark edit-btn mt-3">Edit</button>
+                </form><br>
+            </div>
+        </div>
+    </body>
